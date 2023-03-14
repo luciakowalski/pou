@@ -4,7 +4,42 @@ namespace SpriteKind {
     export const comidita2 = SpriteKind.create()
     export const victory = SpriteKind.create()
     export const loser = SpriteKind.create()
+    export const terrestre = SpriteKind.create()
+    export const bala = SpriteKind.create()
 }
+controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    bala = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . 8 . . . . . . 
+        . . . . . . . . . 8 8 . . . . . 
+        . . . 8 8 8 8 8 8 8 8 2 . . . . 
+        . . . 8 8 8 8 8 8 8 8 2 . . . . 
+        . . . . . . . . . 8 8 . . . . . 
+        . . . . . . . . . 8 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, duck, 80, 0)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
+    music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
+    sprites.destroy(terrestre)
+})
+info.onScore(60, function () {
+    game.gameOver(true)
+    game.setGameOverEffect(true, effects.confetti)
+})
+sprites.onOverlap(SpriteKind.terrestre, SpriteKind.Player, function (sprite, otherSprite) {
+    music.play(music.melodyPlayable(music.footstep), music.PlaybackMode.UntilDone)
+    sprites.destroy(terrestre)
+    info.setLife(info.life() - 2)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.comidita, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
     sprites.destroy(comidita)
@@ -287,12 +322,8 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.victory, function (sprite, other
     game.gameOver(true)
     game.setGameOverEffect(true, effects.confetti)
 })
-info.onScore(120, function () {
-    game.gameOver(true)
-    game.setGameOverEffect(true, effects.confetti)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
-    music.play(music.melodyPlayable(music.wawawawaa), music.PlaybackMode.UntilDone)
+    music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     sprites.destroy(otherSprite)
     info.setLife(info.life() - 1)
 })
@@ -302,6 +333,9 @@ let mielda: Sprite = null
 let loser: Sprite = null
 let comidita_20: Sprite = null
 let comidita: Sprite = null
+let terrestre: Sprite = null
+let bala: Sprite = null
+let duck: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -425,7 +459,7 @@ scene.setBackgroundImage(img`
     7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777
     `)
 tiles.setCurrentTilemap(tilemap`level2`)
-let duck = sprites.create(img`
+duck = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . b 5 b . . . 
     . . . . . . . . . b 5 b . . . . 
@@ -468,6 +502,37 @@ game.onUpdateInterval(500000, function () {
     extra_life.setScale(0.7, ScaleAnchor.Middle)
     extra_life.setPosition(randint(0, 150), 1)
     extra_life.setVelocity(0, 25)
+})
+game.onUpdateInterval(17000, function () {
+    terrestre = sprites.create(img`
+        ...............ff.......
+        .............ff2ffff....
+        ............ff2feeeeff..
+        ...........ff22feeeeeff.
+        ...........feeeeffeeeef.
+        ..........fe2222eefffff.
+        ..........f2effff222efff
+        ..........fffeeeffffffff
+        ..........fee44fbe44efef
+        ...........feddfb4d4eef.
+        ..........c.eeddd4eeef..
+        ....ccccccceddee2222f...
+        .....dddddcedd44e444f...
+        ......ccccc.eeeefffff...
+        ..........c...ffffffff..
+        ...............ff..fff..
+        ........................
+        ........................
+        ........................
+        ........................
+        ........................
+        ........................
+        ........................
+        ........................
+        `, SpriteKind.terrestre)
+    terrestre.setScale(1, ScaleAnchor.Middle)
+    terrestre.setPosition(149, 96)
+    terrestre.setVelocity(-20, 0)
 })
 game.onUpdateInterval(2500, function () {
     comidita = sprites.create(img`
@@ -536,7 +601,7 @@ game.onUpdateInterval(60000, function () {
         `, SpriteKind.victory)
     victory.setScale(0.7, ScaleAnchor.Middle)
     victory.setPosition(randint(0, 152), 1)
-    victory.setVelocity(0, 70)
+    victory.setVelocity(0, 84)
 })
 game.onUpdateInterval(3500, function () {
     comidita_20 = sprites.create(img`
