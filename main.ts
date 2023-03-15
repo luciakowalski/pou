@@ -480,6 +480,9 @@ duck = sprites.create(img`
 duck.setPosition(78, 93)
 controller.moveSprite(duck, 100, 0)
 info.setLife(3)
+game.onUpdate(function () {
+	
+})
 game.onUpdateInterval(500000, function () {
     extra_life = sprites.create(img`
         . . . . . . . . . . . . . . . . 
