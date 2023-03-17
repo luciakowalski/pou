@@ -25,7 +25,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, duck, 85, 0)
+        `, duck, 90, 0)
     music.play(music.melodyPlayable(music.pewPew), music.PlaybackMode.UntilDone)
 })
 sprites.onOverlap(SpriteKind.terrestre, SpriteKind.Player, function (sprite, otherSprite) {
@@ -168,6 +168,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.terrestre, function (sprite,
             `)
         mielda.setVelocity(0, 90)
     }
+})
+info.onScore(100, function () {
+    game.gameOver(true)
+    game.setGameOverEffect(true, effects.confetti)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.comidita2, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.baDing), music.PlaybackMode.UntilDone)
@@ -312,7 +316,7 @@ info.onLifeZero(function () {
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.life, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.beamUp), music.PlaybackMode.UntilDone)
-    sprites.destroy(otherSprite)
+    sprites.destroy(extra_life)
     info.setLife(info.life() + 1)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.victory, function (sprite, otherSprite) {
@@ -321,17 +325,13 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.victory, function (sprite, other
     game.gameOver(true)
     game.setGameOverEffect(true, effects.confetti)
 })
-info.onScore(120, function () {
-    game.gameOver(true)
-    game.setGameOverEffect(true, effects.confetti)
-})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     music.play(music.melodyPlayable(music.knock), music.PlaybackMode.UntilDone)
     sprites.destroy(otherSprite)
     info.setLife(info.life() - 1)
 })
-let extra_life: Sprite = null
 let victory2: Sprite = null
+let extra_life: Sprite = null
 let loser2: Sprite = null
 let comidita_20: Sprite = null
 let mielda: Sprite = null
@@ -612,6 +612,31 @@ game.onUpdateInterval(60000, function () {
         victory2.setVelocity(0, 84)
     }
 })
+game.onUpdateInterval(13000, function () {
+    if (game.runtime() > 10000) {
+        extra_life = sprites.create(img`
+            . . . . . . . . . . . . . . . . 
+            . . f f f f f f . f f f f f f . 
+            . f f 3 3 3 3 f f f 3 3 3 3 f f 
+            . f 3 3 3 3 3 3 f 3 3 3 3 3 3 f 
+            . f 3 3 3 3 3 3 3 3 1 1 1 3 3 f 
+            . f 3 3 3 3 3 3 3 3 1 1 1 3 3 f 
+            . f 3 3 3 3 3 b b b 1 1 1 3 3 f 
+            . f 3 3 3 3 b b b b b 3 3 3 3 f 
+            . f f 3 3 b b b b b b b 3 3 f f 
+            . . f f 3 b b b b b b b 3 f f . 
+            . . . f f b b b b b b b f f . . 
+            . . . . f f b b b b b f f . . . 
+            . . . . . f f b b b f f . . . . 
+            . . . . . . f f b f f . . . . . 
+            . . . . . . . f f f . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.life)
+        extra_life.setScale(0.7, ScaleAnchor.Middle)
+        extra_life.setPosition(randint(0, 150), 1)
+        extra_life.setVelocity(0, 35)
+    }
+})
 game.onUpdateInterval(3500, function () {
     comidita_20 = sprites.create(img`
         . . . . . . b b b b . . . . . . 
@@ -634,29 +659,4 @@ game.onUpdateInterval(3500, function () {
     comidita_20.setScale(0.7, ScaleAnchor.Middle)
     comidita_20.setPosition(randint(0, 152), 1)
     comidita_20.setVelocity(0, 50)
-})
-game.onUpdateInterval(10000, function () {
-    if (game.runtime() > 10000) {
-        extra_life = sprites.create(img`
-            . . . . . . . . . . . . . . . . 
-            . . f f f f f f . f f f f f f . 
-            . f f 3 3 3 3 f f f 3 3 3 3 f f 
-            . f 3 3 3 3 3 3 f 3 3 3 3 3 3 f 
-            . f 3 3 3 3 3 3 3 3 1 1 1 3 3 f 
-            . f 3 3 3 3 3 3 3 3 1 1 1 3 3 f 
-            . f 3 3 3 3 3 b b b 1 1 1 3 3 f 
-            . f 3 3 3 3 b b b b b 3 3 3 3 f 
-            . f f 3 3 b b b b b b b 3 3 f f 
-            . . f f 3 b b b b b b b 3 f f . 
-            . . . f f b b b b b b b f f . . 
-            . . . . f f b b b b b f f . . . 
-            . . . . . f f b b b f f . . . . 
-            . . . . . . f f b f f . . . . . 
-            . . . . . . . f f f . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.life)
-        extra_life.setScale(0.7, ScaleAnchor.Middle)
-        extra_life.setPosition(randint(0, 150), 1)
-        extra_life.setVelocity(0, 25)
-    }
 })
