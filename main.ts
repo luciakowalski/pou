@@ -505,7 +505,7 @@ game.onUpdateInterval(15000, function () {
             `, SpriteKind.loser)
         loser2.setScale(1.25, ScaleAnchor.Middle)
         loser2.setPosition(randint(0, 152), 1)
-        loser2.setVelocity(0, 63)
+        loser2.setVelocity(0, 73)
     }
 })
 game.onUpdateInterval(17000, function () {
@@ -587,31 +587,6 @@ game.onUpdateInterval(800, function () {
     mielda.setPosition(randint(0, 152), 1)
     mielda.setVelocity(0, 68)
 })
-game.onUpdateInterval(60000, function () {
-    if (game.runtime() > 20000) {
-        victory2 = sprites.create(img`
-            . . . . . . . b b . . . . . . . 
-            . . . . . . b d d b . . . . . . 
-            . . . . . b d 5 5 d b . . . . . 
-            . . . . b b 5 5 5 5 b b . . . . 
-            . . . . b 5 5 5 5 5 5 b . . . . 
-            b b b b b 5 5 5 5 1 1 d b b b b 
-            b 5 5 5 5 5 5 5 5 1 1 1 5 5 5 b 
-            b d d 5 5 5 5 5 5 1 1 1 5 d d b 
-            . b d d 5 5 5 5 5 5 5 5 d d b . 
-            . . b b 5 5 5 5 5 5 5 5 b b . . 
-            . . c b 5 5 5 5 5 5 5 5 b c . . 
-            . . c 5 5 5 5 d d 5 5 5 5 c . . 
-            . . c 5 5 d b b b b d 5 5 c . . 
-            . . c 5 d b c c c c b d 5 c . . 
-            . . c c c c . . . . c c c c . . 
-            . . . . . . . . . . . . . . . . 
-            `, SpriteKind.victory)
-        victory2.setScale(0.7, ScaleAnchor.Middle)
-        victory2.setPosition(randint(0, 152), 1)
-        victory2.setVelocity(0, 84)
-    }
-})
 game.onUpdateInterval(13000, function () {
     if (game.runtime() > 10000) {
         extra_life = sprites.create(img`
@@ -659,4 +634,29 @@ game.onUpdateInterval(3500, function () {
     comidita_20.setScale(0.7, ScaleAnchor.Middle)
     comidita_20.setPosition(randint(0, 152), 1)
     comidita_20.setVelocity(0, 50)
+})
+game.onUpdateInterval(20000, function () {
+    if (game.runtime() > 20000) {
+        victory2 = sprites.create(img`
+            . . . . . . . b b . . . . . . . 
+            . . . . . . b d d b . . . . . . 
+            . . . . . b d 5 5 d b . . . . . 
+            . . . . b b 5 5 5 5 b b . . . . 
+            . . . . b 5 5 5 5 5 5 b . . . . 
+            b b b b b 5 5 5 5 1 1 d b b b b 
+            b 5 5 5 5 5 5 5 5 1 1 1 5 5 5 b 
+            b d d 5 5 5 5 5 5 1 1 1 5 d d b 
+            . b d d 5 5 5 5 5 5 5 5 d d b . 
+            . . b b 5 5 5 5 5 5 5 5 b b . . 
+            . . c b 5 5 5 5 5 5 5 5 b c . . 
+            . . c 5 5 5 5 d d 5 5 5 5 c . . 
+            . . c 5 5 d b b b b d 5 5 c . . 
+            . . c 5 d b c c c c b d 5 c . . 
+            . . c c c c . . . . c c c c . . 
+            . . . . . . . . . . . . . . . . 
+            `, SpriteKind.victory)
+        victory2.setScale(0.7, ScaleAnchor.Middle)
+        victory2.setPosition(randint(0, 152), 1)
+        victory2.setVelocity(0, 84)
+    }
 })
